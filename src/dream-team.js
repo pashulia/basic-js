@@ -20,10 +20,10 @@ function createDreamTeam(members) {
   } else {
     for (let i = 0; i < members.length; i++) {
       if (typeof members[i] === "string") {
-        topSecretName.push(members[i].toLowerCase().split("").find(el => el!==" "));
+        topSecretName.push(members[i].toLowerCase().split("").find(el => el !== " "));
       }
     }
-    return topSecretName.sort().join('').toUpperCase()
+    return topSecretName.sort().join("").toUpperCase()
   }
 }
 
