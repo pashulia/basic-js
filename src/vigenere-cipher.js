@@ -20,13 +20,52 @@ const { NotImplementedError } = require('../extensions/index.js');
  * 
  */
 class VigenereCipheringMachine {
-  encrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  constructor(directMachine = true) {
+    this.directMachine = directMachine;
   }
-  decrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  encrypt(message, key) {
+    if (!message || !key) {
+      throw new Error("Incorrect arguments!");
+    };
+    message = message.toUpperCase();
+    key = key.toUpperCase();
+    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let count = 0;
+    let arr = message.split("").map((el) => {
+      if (!alphabet.includes(el)) {
+        return el;
+      }
+      let res = (el.charCodeAt() - 65 + key.charCodeAt(count % key.length) - 65) % 26 + 65
+      count ++;
+      return String.fromCharCode(res);
+    });
+    if (this.directMachine) {
+      return arr.join('')
+    } else {
+      return arr.reverse().join('')
+    };
+  }
+  decrypt(message, key) {
+    if (!message || !key) {
+      throw new Error("Incorrect arguments!");
+    };
+    message = message.toUpperCase();
+    key = key.toUpperCase();
+    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let count = 0;
+    let arr = message.split("").map((el) => {
+      if (!alphabet.includes(el)) {
+        return el;
+      }
+      let res = ((el.charCodeAt() - key.charCodeAt(count % key.length) + 26) % 26)
+      count ++;
+      return String.fromCharCode(res + 65);
+    });
+    if (this.directMachine) {
+      return arr.join('')
+    } else {
+      return arr.reverse().join('')
+    };
   }
 }
 
